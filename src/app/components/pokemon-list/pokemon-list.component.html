@@ -1,0 +1,53 @@
+<div class="pokemon-list-container">
+  <h2>Pokemon List</h2>
+  <div class="header">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar" class="search-input">
+    <button class="button new-pokemon-button" (click)="save()"><i class="fa fa-plus fa-icon"
+        aria-hidden="true"></i><strong> Nuevo</strong></button>
+  </div>
+  <h3 *ngIf="selectedPokemon">Edit Pokemon</h3>
+  <div *ngIf="selectedPokemon" class="edit-form">
+
+    <div class="form-row">
+      <label>Nombre:</label>
+      <input [(ngModel)]="selectedPokemon.name">
+    </div>
+
+    <div class="form-row">
+      <label>Ataque:</label>
+      <input type="range" [(ngModel)]="selectedPokemon.attack" min="0" max="100" value="50" class="range-input">
+    </div>
+    <div class="form-row">
+      <label>Imagen:</label>
+      <input [(ngModel)]="selectedPokemon.img">
+    </div>
+    <div class="form-row">
+      <label>Defensa:</label>
+      <input [(ngModel)]="selectedPokemon.defense" type="range" min="0" max="100" value="50" class="range-input">
+    </div>
+
+  </div>
+  <div *ngIf="selectedPokemon">
+    <button class="button" (click)="save()">Save</button>
+    <button class="button" (click)="cancel()">Cancel</button>
+  </div>
+
+  <table class="pokemon-table">
+    <tr>
+      <th>Nombre</th>
+      <th>Imagen</th>
+      <th>Attack</th>
+      <th>Defense</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let pokemon of pokemons | filterBy: searchTerm" [class.selected]="pokemon === selectedPokemon">
+      <td>{{pokemon.name}}</td>
+      <td><img class="img-poke" src="{{pokemon.img}}" alt="" style="width:50px; height: 50px;"></td>
+      <td>{{pokemon.attack}}</td>
+      <td>{{pokemon.defense}}</td>
+      <td>
+        <button style="background-color: transparent; border: 0; " (click)="onSelect(pokemon)"><i class="fa fa-pencil"></i></button>
+        <button (click)="delete(pokemon)"><i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
+  </table>
