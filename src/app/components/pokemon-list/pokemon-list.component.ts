@@ -48,7 +48,7 @@ export class PokemonListComponent implements OnInit {
         if (this.selectedPokemon.id) {
           this.pokemonService.updatePokemon(this.selectedPokemon).subscribe(() => this.selectedPokemon = null);
         } else {
-          
+          this.pokemonService.addPokemon(this.selectedPokemon).subscribe(() => {this.selectedPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''};});
         }
     }
 }
