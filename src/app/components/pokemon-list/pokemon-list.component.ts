@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../../models/pokemon.model';
 import { PokemonService } from '../../services/pokemon.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -16,7 +17,7 @@ export class PokemonListComponent implements OnInit {
 
   newPokemon: Pokemon;
 
-  constructor(public pokemonService: PokemonService) { 
+  constructor(public pokemonService: PokemonService, private toastr: ToastrService) { 
 
     this.selectedPokemon = null;
     this.newPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''};
@@ -24,7 +25,12 @@ export class PokemonListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showSuccess();
     this.getPokemons();
+  }
+
+  showSuccess() {
+    this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
   getPokemons(): void {
@@ -47,15 +53,16 @@ export class PokemonListComponent implements OnInit {
     if (this.selectedPokemon) {
         if (this.selectedPokemon.id) {
           this.pokemonService.updatePokemon(this.selectedPokemon).subscribe(() => this.selectedPokemon = null);
-        } else {
-          this.pokemonService.addPokemon(this.selectedPokemon).subscribe(() => {this.selectedPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''};});
         }
     }
 }
 
 saveNewPoke(): void{
-  this.pokemonService.addPokemon(this.newPokemon).subscribe(() => {this.newPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''}; this.newPoke = false});
-
+  this.pokemonService.addPokemon(this.newPokemon).subscribe(() => {
+    this.newPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''}; 
+    this.newPoke = false;
+    this.getPokemons(); 
+  });
 }
 
 

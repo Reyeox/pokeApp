@@ -81,4 +81,11 @@
         <button class="button-cancel" [disabled]="selectedPokemon" (click)="delete(pokemon)"><i class="fa fa-trash" style="color:purple !important"></i></button>
       </td>
     </tr>
+    <tr class="text-center" *ngIf="pokemons.length === 0">
+      <td colspan="5">
+        <p>
+          No hay información de Pokemons
+        </p>
+      </td>
+    </tr>
   </table>
