@@ -54,7 +54,11 @@ export class PokemonListComponent implements OnInit {
 }
 
 saveNewPoke(): void{
-  this.pokemonService.addPokemon(this.newPokemon).subscribe(() => {this.newPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''}; this.newPoke = false});
+  this.pokemonService.addPokemon(this.newPokemon).subscribe(() => {
+    this.newPokemon = {id: 0, name: "", attack: 0, defense: 0, img: ''}; 
+    this.newPoke = false;
+    this.getPokemons();
+  });
 
 }
 
