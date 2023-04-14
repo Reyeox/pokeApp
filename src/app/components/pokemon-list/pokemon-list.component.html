@@ -1,68 +1,12 @@
 <div class="pokemon-list-container">
-  <h2>Pokemon List</h2>
+  <h2>Listado de Pokemon</h2>
   <div class="header">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar" class="search-input">
     <button class="button button-special" (click)="newPoke=!newPoke; selectedPokemon = null"><i class="fa fa-plus fa-icon"
         aria-hidden="true" style="margin-right: 4px"></i> Nuevo</button>
   </div>
-  <h3 *ngIf="selectedPokemon">Editar Pokemon</h3>
-  <div *ngIf="selectedPokemon" class="edit-form">
-
-    <div class="form-row">
-      <label>Nombre:</label>
-      <input [(ngModel)]="selectedPokemon.name">
-    </div>
-
-    <div class="form-row">
-      <label>Ataque: {{selectedPokemon.attack}}</label>
-      <input type="range" [(ngModel)]="selectedPokemon.attack" min="0" max="100" value="50" class="range-input">
-    </div>
-    <div class="form-row">
-      <label>Imagen:</label>
-      <input [(ngModel)]="selectedPokemon.img">
-    </div>
-    <div class="form-row">
-      <label>Defensa: {{selectedPokemon.defense}}</label>
-      <input [(ngModel)]="selectedPokemon.defense" type="range" min="0" max="100" value="50" class="range-input">
-
-    </div>
-
-  </div>
-  <br>
-  <div *ngIf="selectedPokemon" style="text-align:center">
-    <button class="button" (click)="save()"><i class="fa fa-floppy-o"  aria-hidden="true"></i> Guardar</button>
-    <button class="button" (click)="cancel()"><i class="fa fa-ban"  aria-hidden="true"></i> Cancelar</button>
-  </div>
-
-
-  <h3 *ngIf="newPoke">Nuevo Pokemon</h3>
-  <div *ngIf="newPoke" class="edit-form">
-
-    <div class="form-row">
-      <label>Nombre:</label>
-      <input [(ngModel)]="newPokemon.name">
-    </div>
-
-    <div class="form-row">
-      <label>Ataque: {{newPokemon.attack}}</label>
-      <input type="range" [(ngModel)]="newPokemon.attack" min="0" max="100" value="50" class="range-input">
-    </div>
-    <div class="form-row">
-      <label>Imagen:</label>
-      <input [(ngModel)]="newPokemon.img">
-    </div>
-    <div class="form-row">
-      <label>Defensa: {{newPokemon.defense}}</label>
-      <input [(ngModel)]="newPokemon.defense" type="range" min="0" max="100" value="50" class="range-input">
-    </div>
-
-  </div>
-  <br>
-  <div *ngIf="newPoke" style="text-align:center">
-    <button class="button" (click)="saveNewPoke()"><i class="fa fa-floppy-o"  aria-hidden="true"></i> Guardar</button>
-    <button class="button" (click)="cancel()"><i class="fa fa-ban"  aria-hidden="true"></i> Cancelar</button>
-  </div>
-
+ 
+  
   <table class="pokemon-table">
     <tr>
       <th>Nombre</th>
@@ -72,13 +16,80 @@
       <th>Acciones</th>
     </tr>
     <tr *ngFor="let pokemon of pokemons | filterBy: searchTerm" [class.selected]="pokemon === selectedPokemon">
-      <td>{{pokemon.name}}</td>
-      <td><img class="img-poke" src="{{pokemon.img}}" alt="" style="width:50px; height: 50px;"></td>
-      <td>{{pokemon.attack}}</td>
-      <td>{{pokemon.defense}}</td>
+      <td class="td-left">{{pokemon.name}}</td>
+      <td><img class="img-poke" src="{{pokemon.img}}" alt="" style="width:30px; height: 30px;"></td>
+      <td class="td-left">{{pokemon.attack}}</td>
+      <td class="td-left">{{pokemon.defense}}</td>
       <td>
         <button class="button-edit"  (click)="onSelect(pokemon)"><i class="fa fa-pencil" style="color:purple !important"></i></button>
         <button class="button-cancel" [disabled]="selectedPokemon" (click)="delete(pokemon)"><i class="fa fa-trash" style="color:purple !important"></i></button>
       </td>
     </tr>
+    <tr class="text-center" *ngIf="pokemons.length === 0">
+      <td colspan="5">
+        <p>
+          No hay información de Pokemons
+        </p>
+      </td>
+    </tr>
   </table>
+
+  <h3 class="header-center" *ngIf="selectedPokemon">Editar Pokemon</h3>
+  <div *ngIf="selectedPokemon" class="edit-form">
+
+    <div class="form-row">
+      <label class="label-inputs">Nombre:</label>
+      <input [(ngModel)]="selectedPokemon.name">
+    </div>
+
+    <div class="form-row">
+      <label class="label-inputs">Ataque:    {{selectedPokemon.attack}}</label>
+      <input type="range" [(ngModel)]="selectedPokemon.attack" min="0" max="100" value="50" class="input-range">
+    </div>
+    <div class="form-row">
+      <label class="label-inputs">Imagen:</label>
+      <input [(ngModel)]="selectedPokemon.img">
+    </div>
+    <div class="form-row">
+      <label class="label-inputs">Defensa:    {{selectedPokemon.defense}}</label>
+      <input [(ngModel)]="selectedPokemon.defense" type="range" min="0" max="100" value="50" class="input-range">
+
+    </div>
+
+  </div>
+  
+  <div *ngIf="selectedPokemon" style="text-align:center">
+    <br>
+    <button class="button" (click)="save()"><i class="fa fa-floppy-o"  aria-hidden="true"></i> Guardar</button>
+    <button class="button" (click)="cancel()"><i class="fa fa-ban"  aria-hidden="true"></i> Cancelar</button>
+  </div>
+
+
+  <h3 class="header-center" *ngIf="newPoke">Nuevo Pokemon</h3>
+  <div *ngIf="newPoke" class="edit-form">
+
+    <div class="form-row">
+      <label class="label-inputs">Nombre:</label>
+      <input [(ngModel)]="newPokemon.name">
+    </div>
+
+    <div class="form-row">
+      <label class="label-inputs">Ataque:    {{newPokemon.attack}}</label>
+      <input type="range"  class="input-range" [(ngModel)]="newPokemon.attack" min="0" max="100" value="50" >
+    </div>
+    <div class="form-row">
+      <label class="label-inputs">Imagen:</label>
+      <input [(ngModel)]="newPokemon.img">
+    </div>
+    <div class="form-row">
+      <label class="label-inputs">Defensa:    {{newPokemon.defense}}</label>
+      <input class="input-range" [(ngModel)]="newPokemon.defense" type="range" min="0" max="100" value="50" >
+    </div>
+
+  </div>
+  <br>
+  <div *ngIf="newPoke" style="text-align:center">
+    <button class="button" (click)="saveNewPoke()"><i class="fa fa-floppy-o"  aria-hidden="true"></i> Guardar</button>
+    <button class="button" (click)="cancel()"><i class="fa fa-ban"  aria-hidden="true"></i> Cancelar</button>
+  </div>
+
